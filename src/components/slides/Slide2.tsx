@@ -1,9 +1,9 @@
-import { motion } from 'motion/react';
-import { ShadowText } from '../ShadowText';
+import { motion } from "motion/react";
 
-import jsSrc from '../../images/js.png';
-import npmSrc from '../../images/npm.png';
-import reactSrc from '../../images/react.png';
+import jsSrc from "../../images/js.png";
+import npmSrc from "../../images/npm.png";
+import reactSrc from "../../images/react.png";
+import { ShadowText } from "../ShadowText";
 
 export const Slide2 = () => {
   const imgVariant = {
@@ -18,29 +18,24 @@ export const Slide2 = () => {
   };
 
   return (
-    <div className='h-screen w-screen flex justify-center items-center '>
-      <motion.div
-        transition={{ type: 'spring', bounce: 1, damping: 2 }}
-        drag
-        dragSnapToOrigin
-        dragTransition={{ bounceDamping: 10 }}
-      >
-        <ShadowText className='text-7xl font-black drop-shadow-hard-xl'>
+    <div className="flex h-screen w-screen items-center justify-center">
+      <motion.div transition={{ type: "spring", bounce: 1, damping: 2 }}>
+        <ShadowText className="drop-shadow-hard-xl text-7xl font-black">
           Va äre?
         </ShadowText>
       </motion.div>
       <motion.div
         variants={{}}
         transition={{ staggerChildren: 0.2, delayChildren: 1 }}
-        initial={'initial'}
-        animate={'show'}
-        className='absolute py-12 overflow-hidden bottom-0 flex justify-around items-center w-full'
+        initial={"initial"}
+        animate={"show"}
+        className="absolute bottom-0 flex w-full items-center justify-around overflow-hidden py-12"
       >
         <motion.img
           variants={imgVariant}
-          className='w-42 select-none'
+          className="w-42 select-none"
           src={npmSrc}
-          alt='npm logo'
+          alt="npm logo"
         />
         <motion.img
           variants={{
@@ -53,16 +48,16 @@ export const Slide2 = () => {
               translateY: 200,
             },
           }}
-          style={{ animationDelay: '4000ms', animationDuration: '4000ms' }}
-          className='w-36 select-none animate-spin'
+          style={{ animationDelay: "4000ms", animationDuration: "4000ms" }}
+          className="w-36 animate-spin select-none"
           src={reactSrc}
-          alt='react logo'
+          alt="react logo"
         />
         <motion.img
           variants={imgVariant}
-          className='w-32 select-none'
+          className="w-32 select-none"
           src={jsSrc}
-          alt='js logo'
+          alt="js logo"
         />
       </motion.div>
     </div>

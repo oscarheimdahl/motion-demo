@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --color-blue: rgb(34, 118, 220);
@@ -12,7 +12,7 @@
   --drop-shadow-hard-lg: 5px 5px var(--color-gray);
   --drop-shadow-hard-xl: 8px 8px var(--color-gray);
 
-  --font-family-rubik: 'Rubik', sans-serif;
+  --font-family-rubik: "Rubik", sans-serif;
 }
 
 * {
@@ -23,4 +23,18 @@
   background-image: radial-gradient(#00000022 4px, transparent 0);
   background-size: 20px 20px;
   background-position: -14px -19px;
+}
+
+.striped-bg {
+  background-image: linear-gradient(
+    45deg,
+    transparent 25%,
+    #ffffff22 25%,
+    #ffffff22 50%,
+    transparent 50%,
+    transparent 75%,
+    #ffffff22 75%,
+    #ffffff22 100%
+  );
+  background-size: 56.57px 56.57px;
 }

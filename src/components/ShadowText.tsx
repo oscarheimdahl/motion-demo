@@ -1,11 +1,16 @@
-import { cn } from '../utils';
+import { ReactNode } from "react";
 
-export const ShadowText = (props: { children: string; className?: string }) => {
+import { cn } from "../utils";
+
+export const ShadowText = (props: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
     <span
       className={cn(
-        'text-offwhite select-none text-4xl drop-shadow-hard-sm',
-        props.className
+        "text-offwhite drop-shadow-hard-sm text-4xl select-none",
+        props.className,
       )}
     >
       {props.children}
