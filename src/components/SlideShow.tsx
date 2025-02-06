@@ -1,36 +1,54 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 
+import { atom, useAtom } from "jotai";
 import { AnimatePresence, motion } from "motion/react";
+
+// Keeps track of the nested slideshow, and makes sure only the outermost one get the keyboard events.
+const slideShowsAtom = atom<string[]>([]);
 
 export const SlideShow = (props: {
   slidesComponents: ReactNode[];
   index: number;
   setIndex: (index: number) => void;
-  slideShowLevel: number;
 }) => {
+  const id = useRef(crypto.randomUUID());
+  const [activeSlideShows, setActiveSlideShows] = useAtom(slideShowsAtom);
+
+  const [blocked, setBlocked] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right">("right");
   const slides = props.slidesComponents.map((slide, i) => ({
     Slide: slide,
     id: i,
   }));
+  const inactive = id.current !== activeSlideShows[activeSlideShows.length - 1];
 
-  const [direction, setDirection] = useState<"left" | "right">("right");
-  const [blocked, setBlocked] = useState(false);
+  useEffect(() => {
+    setActiveSlideShows([...activeSlideShows, id.current]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const abort = new AbortController();
+
     document.addEventListener(
       "keydown",
       (e) => {
+        if (inactive) return;
         const slide = (doSlide: () => void) => {
-          e.stopImmediatePropagation();
           e.preventDefault();
           if (blocked) return;
           doSlide();
           setBlocked(true);
         };
 
+        const leaveSlideShow = () => {
+          e.preventDefault();
+          if (activeSlideShows.length === 1) return;
+          setActiveSlideShows(activeSlideShows.filter((s) => s !== id.current));
+        };
+
         if (e.key === "ArrowLeft") {
-          if (props.index === 0) return;
+          if (props.index === 0) return leaveSlideShow();
 
           slide(() => {
             setDirection("left");
@@ -38,7 +56,7 @@ export const SlideShow = (props: {
           });
         }
         if (e.key === "ArrowRight") {
-          if (props.index === slides.length - 1) return;
+          if (props.index === slides.length - 1) return leaveSlideShow();
 
           slide(() => {
             setDirection("right");
@@ -46,19 +64,23 @@ export const SlideShow = (props: {
           });
         }
       },
-      {
-        signal: abort.signal,
-      },
+      { signal: abort.signal },
     );
 
-    return () => {
-      abort.abort();
-    };
-  }, [blocked, props, slides.length]);
+    return () => abort.abort();
+  }, [
+    inactive,
+    activeSlideShows,
+    blocked,
+    props,
+    setActiveSlideShows,
+    slides.length,
+  ]);
 
   return (
     <AnimatePresence custom={direction} initial={false} mode="popLayout">
       <motion.div
+        className="size-full"
         onAnimationComplete={() => setBlocked(false)}
         custom={direction}
         initial={"initial"}

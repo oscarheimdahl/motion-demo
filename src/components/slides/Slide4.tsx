@@ -2,10 +2,14 @@ import { useState } from "react";
 
 import { AnimatePresence, motion } from "motion/react";
 
-import { ShadowText } from "../ShadowText";
+import animatePresenceReact from "../../images/code/animate-presence-motion.png";
+import animatePresenceMotion from "../../images/code/animate-presence-react.png";
+import { CodeImage } from "../CodeImage";
+import { ShadowTextHeader } from "../ShadowText";
+import { SlideShow } from "../SlideShow";
 
-export const Slide4x1 = () => {
-  const [show, setShow] = useState(false);
+export const Slide4 = () => {
+  const [index, setIndex] = useState(0);
 
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
@@ -33,7 +37,7 @@ export const Slide4x1 = () => {
           variants={{
             animate: {
               scale: 0.8,
-              translateY: "-30vh",
+              translateY: "-40vh",
               transition: {
                 delay: 2,
                 duration: 0.2,
@@ -47,42 +51,56 @@ export const Slide4x1 = () => {
           }}
           className="flex flex-col items-center gap-4"
         >
-          <ShadowText className="drop-shadow-hard-xl text-8xl font-black">
-            AnimatePresence
-          </ShadowText>
-          <motion.button
-            variants={{
-              initial: {
-                scale: 0,
-              },
-              animate: {
-                scale: 1,
-                transition: {
-                  delay: 2.6,
-                  duration: 0.3,
-                },
-              },
-            }}
-            onClick={() => setShow((prev) => !prev)}
-            style={{ perspective: "1000px" }}
-            className="drop-shadow-hard-lg mx-auto w-fit origin-top rounded-md bg-teal-600 px-4 py-2 text-3xl text-white transition-transform hover:translate-y-1"
-          >
-            Click me
-          </motion.button>
+          <ShadowTextHeader>AnimatePresence</ShadowTextHeader>
         </motion.div>
       </motion.div>
-      <div className="flex flex-col gap-4">
-        <AnimatePresence>
-          {show && (
-            <motion.div
-              initial={{ opacity: 0, translateY: -100 }}
-              animate={{ opacity: 1, translateY: 0 }}
-              exit={{ opacity: 0, translateY: -100 }}
-              key="box"
-              className="drop-shadow-hard-xl striped-bg flex size-52 items-center justify-center rounded-2xl bg-violet-700"
-            ></motion.div>
-          )}
-        </AnimatePresence>
+      <SlideShow
+        index={index}
+        setIndex={setIndex}
+        slidesComponents={[<Slide4x1 />, <Slide4x2 />]}
+      ></SlideShow>
+    </div>
+  );
+};
+
+export const Slide4x1 = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => {
+    setShow((prev) => !prev);
+  };
+
+  return (
+    <div className="relative flex h-full flex-col items-center justify-center gap-4">
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            initial={{ opacity: 0, translateY: -100 }}
+            animate={{ opacity: 1, translateY: 0 }}
+            exit={{ opacity: 0, translateY: -100 }}
+            // key="box"
+            className="drop-shadow-hard-xl striped-bg flex size-52 items-center justify-center rounded-2xl bg-violet-700"
+          ></motion.div>
+        )}
+      </AnimatePresence>
+      <motion.button
+        onClick={handleClick}
+        className="drop-shadow-hard-lg absolute bottom-12 left-1/2 mx-auto w-fit origin-top -translate-x-1/2 rounded-md bg-teal-600 px-4 py-2 text-3xl text-white transition-transform hover:translate-y-1"
+      >
+        Click me
+      </motion.button>
+    </div>
+  );
+};
+
+export const Slide4x2 = () => {
+  return (
+    <div className="flex size-full items-center justify-center">
+      <div className="max-w-xl">
+        <CodeImage src={animatePresenceReact} />
+      </div>
+      <div className="max-w-xl">
+        <CodeImage src={animatePresenceMotion} />
       </div>
     </div>
   );

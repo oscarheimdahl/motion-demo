@@ -17,3 +17,16 @@ export const ShadowText = (props: {
     </span>
   );
 };
+
+export const ShadowTextHeader = (props: {
+  children: ReactNode;
+  className?: string;
+}) => {
+  return (
+    <ShadowText
+      className={cn("drop-shadow-hard-xl text-8xl font-black", props.className)}
+    >
+      {props.children}
+    </ShadowText>
+  );
+};
