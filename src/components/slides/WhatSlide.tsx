@@ -5,7 +5,7 @@ import npmSrc from "../../images/npm.png";
 import reactSrc from "../../images/react.png";
 import { ShadowText } from "../ShadowText";
 
-export const Slide2 = () => {
+export const WhatSlide = () => {
   const imgVariant = {
     show: {
       opacity: 1,

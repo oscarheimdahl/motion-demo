@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { cn } from "../../utils";
 import { ShadowText } from "../ShadowText";
 
-export const Slide1 = () => {
+export const IntroSlide = () => {
   return (
     <div className="flex h-screen w-screen items-center justify-center gap-36">
       <div className="flex aspect-square flex-col items-center justify-center gap-1">

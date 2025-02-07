@@ -8,7 +8,7 @@ import { CodeImage } from "../CodeImage";
 import { ShadowTextHeader } from "../ShadowText";
 import { SlideShow } from "../SlideShow";
 
-export const Slide4 = () => {
+export const AnimatePresenceSlide = () => {
   const [index, setIndex] = useState(0);
 
   return (
@@ -71,7 +71,7 @@ export const Slide4x1 = () => {
   };
 
   return (
-    <div className="relative flex h-full flex-col items-center justify-center gap-4">
+    <div className="relative flex h-full w-full flex-col items-center justify-center gap-4">
       <AnimatePresence>
         {show && (
           <motion.div
@@ -85,7 +85,7 @@ export const Slide4x1 = () => {
       </AnimatePresence>
       <motion.button
         onClick={handleClick}
-        className="drop-shadow-hard-lg absolute bottom-12 left-1/2 mx-auto w-fit origin-top -translate-x-1/2 rounded-md bg-teal-600 px-4 py-2 text-3xl text-white transition-transform hover:translate-y-1"
+        className="drop-shadow-hard-lg absolute bottom-12 left-1/2 mx-auto origin-top -translate-x-1/2 rounded-md bg-teal-600 px-4 py-2 text-3xl text-white transition-transform hover:translate-y-1"
       >
         Click me
       </motion.button>

@@ -3,23 +3,25 @@ import { useState } from "react";
 import { motion } from "motion/react";
 
 import { Cursor } from "./components/Cursor";
-import { Slide0 } from "./components/slides/Slide0";
-import { Slide1 } from "./components/slides/Slide1";
-import { Slide2 } from "./components/slides/Slide2";
-import { Slide3 } from "./components/slides/Slide3";
-import { Slide4 } from "./components/slides/Slide4";
-import { Slide5 } from "./components/slides/Slide5";
+import { AnimatePresenceSlide } from "./components/slides/AnimatePresenceSlide";
+import { ApiSlide } from "./components/slides/ApiSlide";
+import { EasingsSlide } from "./components/slides/EasingsSlide";
+import { IntroSlide } from "./components/slides/IntroSlide";
+import { LayoutSlide } from "./components/slides/LayoutSlide";
+import { StartSlide } from "./components/slides/StartSlide";
+import { WhatSlide } from "./components/slides/WhatSlide";
 import { SlideShow } from "./components/SlideShow";
 
 // Makes hard things easy, and easy things great.
 function App() {
   const slides = [
-    <Slide0 />,
-    <Slide1 />,
-    <Slide2 />,
-    <Slide3 />,
-    <Slide4 />,
-    <Slide5 />,
+    <StartSlide />,
+    <IntroSlide />,
+    <WhatSlide />,
+    <EasingsSlide />,
+    <ApiSlide />,
+    <AnimatePresenceSlide />,
+    <LayoutSlide />,
   ];
 
   const [index, setIndex] = useState(0);

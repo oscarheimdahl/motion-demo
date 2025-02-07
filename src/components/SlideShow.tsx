@@ -78,9 +78,9 @@ export const SlideShow = (props: {
   ]);
 
   return (
-    <AnimatePresence custom={direction} initial={false} mode="popLayout">
+    <AnimatePresence custom={direction} mode="popLayout">
       <motion.div
-        className="size-full"
+        className="flex size-full items-center justify-center"
         onAnimationComplete={() => setBlocked(false)}
         custom={direction}
         initial={"initial"}

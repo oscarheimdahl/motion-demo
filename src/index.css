@@ -20,8 +20,8 @@
 }
 
 .dotted-bg {
-  background-image: radial-gradient(#00000022 4px, transparent 0);
-  background-size: 20px 20px;
+  background-image: radial-gradient(#00000022 2px, transparent 0);
+  background-size: 10px 10px;
   background-position: -14px -19px;
 }
 
@@ -37,4 +37,16 @@
     #ffffff22 100%
   );
   background-size: 56.57px 56.57px;
+}
+
+@keyframes pulse2 {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

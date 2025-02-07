@@ -36,6 +36,7 @@ export const Cursor = () => {
     <div
       className="pointer-events-none absolute top-0 left-0"
       style={{
+        zIndex: 9999,
         transform: `translate(${position.x}px, ${position.y}px)`,
       }}
     >

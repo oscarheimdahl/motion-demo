@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 
 import { ShadowText } from "../ShadowText";
 
-export const Slide3 = () => {
+export const EasingsSlide = () => {
   const [flip, setFlip] = useState(false);
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export const Slide3 = () => {
           <motion.div
             className="dotted-bg drop-shadow-hard-xl size-52 rounded-md bg-green-600"
             transition={{
-              duration: 0.8,
+              visualDuration: 0.8,
               type: "spring",
               mass: 1,
               velocity: 0.1,

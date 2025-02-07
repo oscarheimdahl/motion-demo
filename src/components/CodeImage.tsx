@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { cn } from "../utils";
 
 // https://www.ray.so/#width=520&padding=16&background=false&theme=candy
-export const CodeImage = (props: { src: string; className?: string }) => {
+export const CodeImage = (props: { src: string }) => {
   const [open, setOpen] = useState(false);
 
   return (
