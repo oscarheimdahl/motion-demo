@@ -1,14 +1,14 @@
-import { useRef, useState } from "react";
+import { RefObject, useRef, useState } from "react";
 
 import { ArrowUp } from "lucide-react";
-import { motion, useScroll } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import whileInView from "../../images/code/whileInView.png";
 import { CodeImage } from "../CodeImage";
-import { ShadowTextHeader } from "../ShadowText";
+import { ShadowText, ShadowTextHeader } from "../ShadowText";
 import { SlideShow } from "../SlideShow";
 
-export const InViewSlide = () => {
+export const ScrollingSlide = () => {
   const [index, setIndex] = useState(0);
   return (
     <div className="relative flex h-screen w-screen items-center justify-center">
@@ -147,36 +147,65 @@ const Slide2 = () => {
 };
 
 export const CatFeed = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   return (
     <div className="flex size-full justify-around">
-      <div className="hide-scrollbar h-full w-full overflow-y-scroll">
+      <div
+        ref={containerRef}
+        className="hide-scrollbar h-full w-full overflow-y-scroll"
+      >
         <div className="flex flex-col items-center justify-center gap-12 p-12 py-[95vh]">
-          <ArrowUp className="text-gray -mt-12 opacity-50" />
-          {Array.from({ length: 5 }).map((_, i) => {
-            return <ScrollBox key={i} />;
-          })}
+          <ScrollBox containerRef={containerRef} />
         </div>
       </div>
     </div>
   );
 };
 
-const ScrollBox = () => {
+const ScrollBox = (props: { containerRef: RefObject<HTMLDivElement> }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-
   const [progress, setProgress] = useState(0);
-
-  scrollYProgress.on("change", (progress) => {
-    setProgress(progress);
+  const [springProgress, setSpringProgress] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    container: props.containerRef,
+    offset: ["end end", "start start"],
   });
+
+  const springValue = useSpring(scrollYProgress, {
+    bounce: 0.8,
+    damping: 7,
+    mass: 0.5,
+    stiffness: 100,
+  });
+
+  scrollYProgress.on("change", (value) => {
+    setProgress(value);
+  });
+
+  springValue.on("change", (value) => {
+    setSpringProgress(value);
+  });
+
+  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const widthSpring = useTransform(springValue, [0, 1], ["0%", "100%"]);
+
   return (
     <motion.div
       ref={ref}
-      className="drop-shadow-hard-lg dotted-bg h-36 w-full max-w-72 rounded-2xl bg-amber-500"
+      className="drop-shadow-hard-lg striped-bg flex h-36 w-full max-w-72 flex-col items-center justify-center gap-2 rounded-2xl bg-slate-700"
     >
-      {" "}
-      {progress}
+      <ShadowText>{progress.toFixed(2)}</ShadowText>
+      <motion.div
+        style={{ width }}
+        className="drop-shadow-hard-sm h-4 w-full rounded-full bg-rose-600"
+      />
+
+      <motion.div
+        style={{ width: widthSpring }}
+        className="drop-shadow-hard-sm h-4 w-full rounded-full bg-amber-500"
+      />
+      <ShadowText>{springProgress.toFixed(2)}</ShadowText>
     </motion.div>
   );
 };
