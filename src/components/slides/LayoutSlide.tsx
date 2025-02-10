@@ -189,9 +189,9 @@ export const ReOrder = () => {
                 {item}
               </div>
 
-              <div className="absolute right-1 bottom-1 flex flex-col items-center text-3xl">
+              <div className="absolute right-1 bottom-1 flex rotate-180 flex-col items-center text-3xl">
+                <div>{item}</div>
                 <div>♣</div>
-                <div className="rotate-180">{item}</div>
               </div>
             </motion.div>
           </Reorder.Item>

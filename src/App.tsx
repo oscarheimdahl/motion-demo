@@ -7,6 +7,7 @@ import { AnimatePresenceSlide } from "./components/slides/AnimatePresenceSlide";
 import { ApiSlide } from "./components/slides/ApiSlide";
 import { EasingsSlide } from "./components/slides/EasingsSlide";
 import { IntroSlide } from "./components/slides/IntroSlide";
+import { InViewSlide } from "./components/slides/InViewSlide";
 import { LayoutSlide } from "./components/slides/LayoutSlide";
 import { StartSlide } from "./components/slides/StartSlide";
 import { WhatSlide } from "./components/slides/WhatSlide";
@@ -15,6 +16,7 @@ import { SlideShow } from "./components/SlideShow";
 // Makes hard things easy, and easy things great.
 function App() {
   const slides = [
+    <InViewSlide />,
     <StartSlide />,
     <IntroSlide />,
     <WhatSlide />,
