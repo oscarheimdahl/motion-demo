@@ -8,7 +8,7 @@ import { ApiSlide } from "./components/slides/ApiSlide";
 import { EasingsSlide } from "./components/slides/EasingsSlide";
 import { IntroSlide } from "./components/slides/IntroSlide";
 import { LayoutSlide } from "./components/slides/LayoutSlide";
-import { CatFeed, ScrollingSlide } from "./components/slides/ScrollingSlide";
+import { ScrollingSlide } from "./components/slides/ScrollingSlide";
 import { StartSlide } from "./components/slides/StartSlide";
 import { WhatSlide } from "./components/slides/WhatSlide";
 import { SlideShow } from "./components/SlideShow";
@@ -16,8 +16,6 @@ import { SlideShow } from "./components/SlideShow";
 // Makes hard things easy, and easy things great.
 function App() {
   const slides = [
-    <CatFeed />,
-    <ScrollingSlide />,
     <StartSlide />,
     <IntroSlide />,
     <WhatSlide />,
@@ -25,6 +23,7 @@ function App() {
     <ApiSlide />,
     <AnimatePresenceSlide />,
     <LayoutSlide />,
+    <ScrollingSlide />,
   ];
 
   const [index, setIndex] = useState(0);

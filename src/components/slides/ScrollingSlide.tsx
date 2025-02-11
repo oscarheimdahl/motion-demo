@@ -3,6 +3,25 @@ import { RefObject, useRef, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
+import cat1 from "../../images/cats/cat_1.jpg";
+import cat16 from "../../images/cats/cat_2.jpg";
+import cat3 from "../../images/cats/cat_3.jpg";
+import cat4 from "../../images/cats/cat_4.jpg";
+import cat7 from "../../images/cats/cat_5.jpg";
+import cat6 from "../../images/cats/cat_6.jpg";
+import cat5 from "../../images/cats/cat_7.jpg";
+import cat8 from "../../images/cats/cat_8.jpg";
+import cat9 from "../../images/cats/cat_9.jpg";
+import cat10 from "../../images/cats/cat_10.jpg";
+import cat11 from "../../images/cats/cat_11.jpg";
+import cat12 from "../../images/cats/cat_12.jpg";
+import cat13 from "../../images/cats/cat_13.jpg";
+import cat14 from "../../images/cats/cat_14.jpg";
+import cat15 from "../../images/cats/cat_15.jpg";
+import cat2 from "../../images/cats/cat_16.jpg";
+import cat17 from "../../images/cats/cat_17.jpg";
+import cat18 from "../../images/cats/cat_18.jpg";
+import useScrollImage from "../../images/code/useScroll.png";
 import whileInView from "../../images/code/whileInView.png";
 import { CodeImage } from "../CodeImage";
 import { ShadowText, ShadowTextHeader } from "../ShadowText";
@@ -41,14 +60,14 @@ export const ScrollingSlide = () => {
       </motion.div>
       <motion.div
         className="size-full"
-        initial={{ filter: "blur(100px)", opacity: 0 }}
-        animate={{ filter: "blur(0)", opacity: 1 }}
-        transition={{ delay: 2.2 }}
+        initial={{ filter: "blur(100px)", opacity: 0, translateY: 100 }}
+        animate={{ filter: "blur(0)", opacity: 1, translateY: 0 }}
+        transition={{ delay: 2.2, duration: 0.5 }}
       >
         <SlideShow
           index={index}
           setIndex={setIndex}
-          slidesComponents={[<Slide1 />, <Slide2 />]}
+          slidesComponents={[<Slide1 />, <Slide2 />, <Slide3 />]}
         />
       </motion.div>
     </div>
@@ -137,37 +156,37 @@ const Scrollers = () => {
 
 const Slide2 = () => {
   return (
-    <div className="flex size-full items-center gap-12">
-      <CatFeed />
+    <div className="flex size-full items-center justify-around gap-12">
+      <ScrollHooksExample />
       <div className="z-50 max-w-xl">
-        <CodeImage src={whileInView} />
+        <CodeImage src={useScrollImage} />
       </div>
     </div>
   );
 };
 
-export const CatFeed = () => {
+export const ScrollHooksExample = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   return (
-    <div className="flex size-full justify-around">
-      <div
-        ref={containerRef}
-        className="hide-scrollbar h-full w-full overflow-y-scroll"
-      >
-        <div className="flex flex-col items-center justify-center gap-12 p-12 py-[95vh]">
-          <ScrollBox containerRef={containerRef} />
-        </div>
+    <div
+      ref={containerRef}
+      className="hide-scrollbar h-full w-fit overflow-y-scroll"
+    >
+      <div className="flex flex-col items-center justify-center gap-12 p-12 py-[95vh]">
+        <ScrollHooksExampleBox containerRef={containerRef} />
       </div>
     </div>
   );
 };
 
-const ScrollBox = (props: { containerRef: RefObject<HTMLDivElement> }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+const ScrollHooksExampleBox = (props: {
+  containerRef: RefObject<HTMLDivElement>;
+}) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
   const [progress, setProgress] = useState(0);
   const [springProgress, setSpringProgress] = useState(0);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: targetRef,
     container: props.containerRef,
     offset: ["end end", "start start"],
   });
@@ -192,8 +211,8 @@ const ScrollBox = (props: { containerRef: RefObject<HTMLDivElement> }) => {
 
   return (
     <motion.div
-      ref={ref}
-      className="drop-shadow-hard-lg striped-bg flex h-36 w-full max-w-72 flex-col items-center justify-center gap-2 rounded-2xl bg-slate-700"
+      ref={targetRef}
+      className="drop-shadow-hard-lg striped-bg flex h-36 w-72 flex-col items-center justify-center gap-2 rounded-2xl bg-slate-700"
     >
       <ShadowText>{progress.toFixed(2)}</ShadowText>
       <motion.div
@@ -206,6 +225,113 @@ const ScrollBox = (props: { containerRef: RefObject<HTMLDivElement> }) => {
         className="drop-shadow-hard-sm h-4 w-full rounded-full bg-amber-500"
       />
       <ShadowText>{springProgress.toFixed(2)}</ShadowText>
+    </motion.div>
+  );
+};
+
+export const Slide3 = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const catImages = [
+    cat1,
+    cat2,
+    cat3,
+    cat4,
+    cat5,
+    cat6,
+    cat7,
+    cat8,
+    cat9,
+    cat10,
+    cat11,
+    cat12,
+    cat13,
+    cat14,
+    cat15,
+    cat16,
+    cat17,
+    cat18,
+  ];
+  return (
+    <div
+      ref={containerRef}
+      className="hide-scrollbar size-full overflow-y-scroll"
+    >
+      <div className="flex flex-col items-center justify-center p-12 py-[95vh]">
+        {catImages.map((catImage, i) => {
+          return (
+            <CatImage
+              src={catImage}
+              dir={i % 2 === 0 ? 1 : -1}
+              key={i}
+              containerRef={containerRef}
+            />
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const CatImage = (props: {
+  containerRef: RefObject<HTMLDivElement>;
+  dir: -1 | 1;
+  src: string;
+}) => {
+  const dir = props.dir;
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    container: props.containerRef,
+    offset: ["end end", "start start"],
+  });
+
+  const springValue = useSpring(scrollYProgress, {
+    bounce: 0.2,
+  });
+
+  const scale = useTransform(
+    springValue,
+    [0, 0.4, 0.6, 1],
+    ["0.6", "1", "1", "0.6"],
+  );
+
+  const offsetY = useTransform(
+    springValue,
+    [0, 0.4, 0.8, 1],
+    ["100px", "-50px", "-50px", "-400px"],
+  );
+  const offsetX = useTransform(
+    springValue,
+    [0, 0.7, 1],
+    [`0px`, "0px", `${400 * dir}px`],
+  );
+  const rotation = useTransform(
+    springValue,
+    [0.7, 1],
+    ["0deg", `${90 * dir}deg`],
+  );
+
+  return (
+    <motion.div
+      style={{
+        rotate: rotation,
+        scale,
+        translateY: offsetY,
+        translateX: offsetX,
+      }}
+      ref={targetRef}
+      className="drop-shadow-hard-xl"
+    >
+      <motion.div
+        className="bg-offwhite rounded-[1px] p-4 pb-15 drop-shadow-lg"
+        style={{
+          rotate: `${dir * 1}deg`,
+          boxShadow: "0 0 4px rgba(0,0,0, 0.2)",
+        }}
+      >
+        <img src={props.src} alt="cat" className="size-[300px]"></img>
+      </motion.div>
     </motion.div>
   );
 };
