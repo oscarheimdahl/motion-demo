@@ -3,24 +3,6 @@ import { RefObject, useRef, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
-import cat1 from "../../images/cats/cat_1.jpg";
-import cat16 from "../../images/cats/cat_2.jpg";
-import cat3 from "../../images/cats/cat_3.jpg";
-import cat4 from "../../images/cats/cat_4.jpg";
-import cat7 from "../../images/cats/cat_5.jpg";
-import cat6 from "../../images/cats/cat_6.jpg";
-import cat5 from "../../images/cats/cat_7.jpg";
-import cat8 from "../../images/cats/cat_8.jpg";
-import cat9 from "../../images/cats/cat_9.jpg";
-import cat10 from "../../images/cats/cat_10.jpg";
-import cat11 from "../../images/cats/cat_11.jpg";
-import cat12 from "../../images/cats/cat_12.jpg";
-import cat13 from "../../images/cats/cat_13.jpg";
-import cat14 from "../../images/cats/cat_14.jpg";
-import cat15 from "../../images/cats/cat_15.jpg";
-import cat2 from "../../images/cats/cat_16.jpg";
-import cat17 from "../../images/cats/cat_17.jpg";
-import cat18 from "../../images/cats/cat_18.jpg";
 import useScrollImage from "../../images/code/useScroll.png";
 import whileInView from "../../images/code/whileInView.png";
 import { CodeImage } from "../CodeImage";
@@ -232,37 +214,23 @@ const ScrollHooksExampleBox = (props: {
 export const Slide3 = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const catImages = [
-    cat1,
-    cat2,
-    cat3,
-    cat4,
-    cat5,
-    cat6,
-    cat7,
-    cat8,
-    cat9,
-    cat10,
-    cat11,
-    cat12,
-    cat13,
-    cat14,
-    cat15,
-    cat16,
-    cat17,
-    cat18,
-  ];
+  const images = import.meta.glob<{ default: string }>(
+    "../../images/cats/*.jpg",
+    { eager: true },
+  );
+  const srcs = Object.values(images).map((image) => image.default);
+
   return (
     <div
       ref={containerRef}
       className="hide-scrollbar size-full overflow-y-scroll"
     >
-      <div className="flex flex-col items-center justify-center p-12 py-[95vh]">
-        {catImages.map((catImage, i) => {
+      <div className="flex flex-col items-center justify-center p-12 py-[75%]">
+        {srcs.map((src, i) => {
           return (
             <CatImage
-              src={catImage}
-              dir={i % 2 === 0 ? 1 : -1}
+              src={src}
+              direction={i % 2 === 0 ? 1 : -1}
               key={i}
               containerRef={containerRef}
             />
@@ -275,10 +243,10 @@ export const Slide3 = () => {
 
 const CatImage = (props: {
   containerRef: RefObject<HTMLDivElement>;
-  dir: -1 | 1;
+  direction: -1 | 1;
   src: string;
 }) => {
-  const dir = props.dir;
+  const dir = props.direction;
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -299,7 +267,7 @@ const CatImage = (props: {
   const offsetY = useTransform(
     springValue,
     [0, 0.4, 0.8, 1],
-    ["100px", "-50px", "-50px", "-400px"],
+    ["100px", "0px", "0px", "-400px"],
   );
   const offsetX = useTransform(
     springValue,
@@ -311,6 +279,11 @@ const CatImage = (props: {
     [0.7, 1],
     ["0deg", `${90 * dir}deg`],
   );
+  const saturation = useTransform(
+    springValue,
+    [0, 0.4, 0.8, 1],
+    ["saturate(1)", "saturate(1.5)", "saturate(1.5)", "saturate(1)"],
+  );
 
   return (
     <motion.div
@@ -319,12 +292,13 @@ const CatImage = (props: {
         scale,
         translateY: offsetY,
         translateX: offsetX,
+        filter: saturation,
       }}
       ref={targetRef}
-      className="drop-shadow-hard-xl"
+      className="drop-shadow-hard-xl -my-10"
     >
       <motion.div
-        className="bg-offwhite rounded-[1px] p-4 pb-15 drop-shadow-lg"
+        className="bg-offwhite relative overflow-hidden rounded-[1px] p-4 pb-15 drop-shadow-lg"
         style={{
           rotate: `${dir * 1}deg`,
           boxShadow: "0 0 4px rgba(0,0,0, 0.2)",
