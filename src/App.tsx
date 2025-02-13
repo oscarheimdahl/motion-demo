@@ -17,6 +17,7 @@ import { SlideShow } from "./components/SlideShow";
 // Makes hard things easy, and easy things great.
 function App() {
   const slides = [
+    <ScrollingSlide />,
     <SpringSlide />,
     <StartSlide />,
     <IntroSlide />,

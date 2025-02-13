@@ -1,7 +1,13 @@
 import { RefObject, useRef, useState } from "react";
 
-import { ArrowUp } from "lucide-react";
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { ArrowUp, Heart, Leaf, Star } from "lucide-react";
+import {
+  motion,
+  MotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
 
 import useScrollImage from "../../images/code/useScroll.png";
 import whileInView from "../../images/code/whileInView.png";
@@ -254,58 +260,79 @@ const CatImage = (props: {
     offset: ["end end", "start start"],
   });
 
-  const springValue = useSpring(scrollYProgress, {
-    bounce: 0.2,
-  });
-
   const scale = useTransform(
-    springValue,
+    scrollYProgress,
     [0, 0.4, 0.6, 1],
     ["0.6", "1", "1", "0.6"],
   );
 
   const offsetY = useTransform(
-    springValue,
+    scrollYProgress,
     [0, 0.4, 0.8, 1],
-    ["100px", "0px", "0px", "-400px"],
+    ["160px", "0px", "0px", "-400px"],
   );
   const offsetX = useTransform(
-    springValue,
-    [0, 0.7, 1],
-    [`0px`, "0px", `${400 * dir}px`],
+    scrollYProgress,
+    [0.3, 0.7, 1],
+    [`0px`, `${50 * dir}px`, `${400 * dir}px`],
   );
   const rotation = useTransform(
-    springValue,
-    [0.7, 1],
-    ["0deg", `${90 * dir}deg`],
+    scrollYProgress,
+    [0.3, 0.7, 1],
+    ["0deg", `${5 * dir}deg`, `${90 * dir}deg`],
   );
   const saturation = useTransform(
-    springValue,
+    scrollYProgress,
     [0, 0.4, 0.8, 1],
     ["saturate(1)", "saturate(1.5)", "saturate(1.5)", "saturate(1)"],
   );
 
   return (
-    <motion.div
-      style={{
-        rotate: rotation,
-        scale,
-        translateY: offsetY,
-        translateX: offsetX,
-        filter: saturation,
-      }}
-      ref={targetRef}
-      className="drop-shadow-hard-xl -my-10"
-    >
+    <div className="drop-shadow-hard-lg">
       <motion.div
-        className="bg-offwhite relative overflow-hidden rounded-[1px] p-4 pb-15 drop-shadow-lg"
         style={{
-          rotate: `${dir * 1}deg`,
-          boxShadow: "0 0 4px rgba(0,0,0, 0.2)",
+          rotate: rotation,
+          scale,
+          translateY: offsetY,
+          translateX: offsetX,
+          filter: saturation,
         }}
+        ref={targetRef}
+        className="drop-shadow-hard-xl -my-10"
       >
-        <img src={props.src} alt="cat" className="size-[300px]"></img>
+        <motion.div
+          className="bg-offwhite relative overflow-hidden rounded-[1px] p-4 pb-15 drop-shadow-lg"
+          style={{
+            rotate: `${dir * 1}deg`,
+            boxShadow: "0 0 4px rgba(0,0,0, 0.2)",
+          }}
+        >
+          <img src={props.src} alt="cat" className="size-[340px]"></img>
+        </motion.div>
+        <Sticker progress={scrollYProgress} />
       </motion.div>
+    </div>
+  );
+};
+
+export const Sticker = (props: { progress: MotionValue<number> }) => {
+  const springProgress = useSpring(props.progress, {
+    // damping: 0.4,
+  });
+  const stickerScale = useTransform(
+    springProgress,
+    [0, 0.5, 1],
+    ["0.6", "1", "0.6"],
+  );
+
+  return (
+    <motion.div
+      style={{ scale: stickerScale }}
+      className="absolute top-4 -left-4 text-4xl"
+    >
+      <Heart className="drop-shadow-hard-sm size-16 rotate-12 fill-rose-500 stroke-rose-500" />
+      <Star className="drop-shadow-hard-sm size-16 rotate-12 fill-yellow-500 stroke-yellow-500" />
+      <Leaf className="drop-shadow-hard-sm size-16 rotate-12 fill-emerald-500 stroke-emerald-600" />
     </motion.div>
   );
 };
