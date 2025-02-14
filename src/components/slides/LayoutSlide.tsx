@@ -150,40 +150,46 @@ export const ReOrder = () => {
     (item, i) => item === ["A", "K", "Q", "J", "10"][i],
   );
 
-  const [holding, setHolding] = useState(false);
+  // const [holding, setHolding] = useState(false);
 
   return (
     <Reorder.Group axis="x" values={items} onReorder={setItems}>
       <div
-        onMouseDown={() => setHolding(true)}
-        onMouseUp={() => setHolding(false)}
-        className="flex flex-row gap-4"
+        // onMouseDown={() => setHolding(true)}
+        // onMouseUp={() => setHolding(false)}
+        className="flex flex-row items-center justify-center gap-4"
       >
         {items.map((item, i) => (
           <Reorder.Item key={item} value={item}>
             <motion.div
-              whileHover={{ scale: 1.1, boxShadow: "0 0 25px rgba(0,0,0,.2)" }}
-              animate={sorted && !holding ? "sorted" : "shuffled"}
+              whileHover={{
+                scale: 1.1,
+              }}
+              animate={sorted ? "sorted" : "shuffled"}
+              transition={{ type: "tween" }}
               variants={{
                 shuffled: {
-                  rotate: i % 2 === 0 ? 1 : -1 * Math.random() * 10 - 5,
+                  rotate: i % 2 === 0 ? 1 : -5,
+                  boxShadow: "0 0 25px rgba(0,0,0,.2)",
                 },
                 sorted: {
-                  rotate: 0,
+                  rotate: i * 10 - 20,
+                  translateY: getYOffset(i) - 50,
+                  translateX: i * -20 + 40,
+                  boxShadow: "0 0 20px #ffffff, 0 0 4px 4px #fcb902",
                 },
               }}
-              className={
-                "bg-offwhite drop-shadow-hard-lg relative rounded-md px-14 py-24 text-neutral-900"
-              }
+              className={cn(
+                "bg-offwhite drop-shadow-hard-lg relative rounded-md px-14 py-24 text-rose-600",
+              )}
             >
               <div className="absolute top-1 left-1 flex flex-col items-center text-3xl">
                 <div>{item}</div>
-                <div>♣</div>
+                <div>♥</div>
               </div>
               <div
                 className={cn(
                   "w-18 text-center text-7xl transition-all duration-700",
-                  sorted && "text-amber-500",
                 )}
               >
                 {item}
@@ -191,12 +197,22 @@ export const ReOrder = () => {
 
               <div className="absolute right-1 bottom-1 flex rotate-180 flex-col items-center text-3xl">
                 <div>{item}</div>
-                <div>♣</div>
+                <div>♥</div>
               </div>
+              {/* </motion.div> */}
             </motion.div>
           </Reorder.Item>
         ))}
       </div>
     </Reorder.Group>
   );
+};
+
+const getYOffset = (i: number) => {
+  if (i === 0) return 30;
+  if (i === 1) return 10;
+  if (i === 2) return 0;
+  if (i === 3) return 10;
+  if (i === 4) return 30;
+  throw new Error("Invalid index");
 };

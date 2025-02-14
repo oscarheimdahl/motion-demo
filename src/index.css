@@ -62,3 +62,10 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.rainbow-shadow {
+  filter: drop-shadow(5px 5px 4px #ff0000) drop-shadow(5px 5px 4px #ff7f00)
+    drop-shadow(5px 5px 4px #ffff00) drop-shadow(5px 5px 4px #00ff00)
+    drop-shadow(5px 5px 4px #0000ff) drop-shadow(5px 5px 4px #2e2b5f)
+    drop-shadow(5px 5px 4px #8b00ff);
+}
