@@ -176,11 +176,11 @@ export const ReOrder = () => {
                   rotate: i * 10 - 20,
                   translateY: getYOffset(i) - 50,
                   translateX: i * -20 + 40,
-                  boxShadow: "0 0 20px #ffffff, 0 0 4px 4px #fcb902",
+                  boxShadow: "0 0 20px #fcb902, 0 0 0px 3px #fcb902",
                 },
               }}
               className={cn(
-                "bg-offwhite drop-shadow-hard-lg relative rounded-md px-14 py-24 text-rose-600",
+                "drop-shadow-hard-lg relative rounded-md bg-linear-120 from-yellow-50 to-white px-14 py-24 text-rose-600",
               )}
             >
               <div className="absolute top-1 left-1 flex flex-col items-center text-3xl">

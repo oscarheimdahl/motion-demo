@@ -309,30 +309,7 @@ const CatImage = (props: {
         >
           <img src={props.src} alt="cat" className="size-[340px]"></img>
         </motion.div>
-        <Sticker progress={scrollYProgress} />
       </motion.div>
     </div>
-  );
-};
-
-export const Sticker = (props: { progress: MotionValue<number> }) => {
-  const springProgress = useSpring(props.progress, {
-    // damping: 0.4,
-  });
-  const stickerScale = useTransform(
-    springProgress,
-    [0, 0.5, 1],
-    ["0.6", "1", "0.6"],
-  );
-
-  return (
-    <motion.div
-      style={{ scale: stickerScale }}
-      className="absolute top-4 -left-4 text-4xl"
-    >
-      <Heart className="drop-shadow-hard-sm size-16 rotate-12 fill-rose-500 stroke-rose-500" />
-      <Star className="drop-shadow-hard-sm size-16 rotate-12 fill-yellow-500 stroke-yellow-500" />
-      <Leaf className="drop-shadow-hard-sm size-16 rotate-12 fill-emerald-500 stroke-emerald-600" />
-    </motion.div>
   );
 };
