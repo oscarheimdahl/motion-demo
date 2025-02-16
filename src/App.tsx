@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { motion } from "motion/react";
 
@@ -6,6 +6,7 @@ import { Cursor } from "./components/Cursor";
 import { AnimatePresenceSlide } from "./components/slides/AnimatePresenceSlide";
 import { ApiSlide } from "./components/slides/ApiSlide";
 import { EasingsSlide } from "./components/slides/EasingsSlide";
+import { DiscussionSlide, EndSlide } from "./components/slides/EndSlide";
 import { IntroSlide } from "./components/slides/IntroSlide";
 import { LayoutSlide } from "./components/slides/LayoutSlide";
 import { ScrollingSlide } from "./components/slides/ScrollingSlide";
@@ -14,8 +15,14 @@ import { StartSlide } from "./components/slides/StartSlide";
 import { WhatSlide } from "./components/slides/WhatSlide";
 import { SlideShow } from "./components/SlideShow";
 
+const getIndexFromURL = () => {
+  const params = new URLSearchParams(window.location.search);
+  return Number(params.get("i")) || 0;
+};
+
 // Makes hard things easy, and easy things great.
 function App() {
+  const [index, setIndex] = useState(getIndexFromURL());
   const slides = [
     <StartSlide />,
     <IntroSlide />,
@@ -26,9 +33,15 @@ function App() {
     <AnimatePresenceSlide />,
     <LayoutSlide />,
     <ScrollingSlide />,
+    <DiscussionSlide />,
+    <EndSlide />,
   ];
 
-  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set("i", index.toString());
+    window.history.replaceState({}, "", `?${params.toString()}`);
+  }, [index]);
 
   return (
     <>

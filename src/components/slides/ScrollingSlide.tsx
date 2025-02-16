@@ -1,13 +1,7 @@
 import { RefObject, useRef, useState } from "react";
 
-import { ArrowUp, Heart, Leaf, Star } from "lucide-react";
-import {
-  motion,
-  MotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "motion/react";
+import { ArrowUp } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
 
 import useScrollImage from "../../images/code/useScroll.png";
 import whileInView from "../../images/code/whileInView.png";
