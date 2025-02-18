@@ -171,6 +171,7 @@ const ScrollHooksExampleBox = (props: {
     target: targetRef,
     container: props.containerRef,
     offset: ["end end", "start start"],
+    layoutEffect: false, // https://github.com/motiondivision/motion/issues/2483#issuecomment-2024710083
   });
 
   const springValue = useSpring(scrollYProgress, {
@@ -252,6 +253,7 @@ const CatImage = (props: {
     target: targetRef,
     container: props.containerRef,
     offset: ["end end", "start start"],
+    layoutEffect: false,
   });
 
   const scale = useTransform(

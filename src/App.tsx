@@ -6,7 +6,7 @@ import { Cursor } from "./components/Cursor";
 import { AnimatePresenceSlide } from "./components/slides/AnimatePresenceSlide";
 import { ApiSlide } from "./components/slides/ApiSlide";
 import { EasingsSlide } from "./components/slides/EasingsSlide";
-import { DiscussionSlide, EndSlide } from "./components/slides/EndSlide";
+import { EndSlide, QuoteSlide } from "./components/slides/EndSlide";
 import { IntroSlide } from "./components/slides/IntroSlide";
 import { LayoutSlide } from "./components/slides/LayoutSlide";
 import { ScrollingSlide } from "./components/slides/ScrollingSlide";
@@ -33,7 +33,7 @@ function App() {
     <AnimatePresenceSlide />,
     <LayoutSlide />,
     <ScrollingSlide />,
-    <DiscussionSlide />,
+    <QuoteSlide />,
     <EndSlide />,
   ];
 

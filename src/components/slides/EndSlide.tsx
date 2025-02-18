@@ -5,7 +5,7 @@ import { cn } from "../../utils";
 import { DottedCircle } from "../DottedCircle";
 import { ShadowTextHeader } from "../ShadowText";
 
-export const DiscussionSlide = () => {
+export const QuoteSlide = () => {
   return (
     <div className="flex h-screen w-screen items-center justify-center gap-36">
       <div className="flex aspect-square flex-col items-center justify-center gap-1">
